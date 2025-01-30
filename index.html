@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 1 Game - Webinar | Super Satang India</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+       <div><h1>Day 1 Game Webinar  | Super Satang India</h1>
+        <p>Recap today's learnings quick about financial literacy basics 101</p></div>
+    </header>
+    <main>
+        <div class="game-1">
+            <div class="game-1-name">
+              <h1>GAME 1</h1>
+              <p>Budget Your Income</p>
+            </div>
+            <div class="game-1-rules">
+                <h1>Fixed Income /per month</h1>
+                <h1>Indian Rupees/INR 5,000</h1>
+            </div>
+            <div class="game-1-p">
+                <p>Budget your money wisely, to adhere to the rules, and get maximun possible savings and investments.</p>
+            </div>
+          </div>
+          <div class="game-1-content">
+            <form action="https://api.web3forms.com/submit" method="POST" class="game-1-form">
+                <div class="game-1-form-content">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" placeholder="Enter your name" class="name" required>
+
+                    <label for="priority">What is your Priority:</label>
+                    <div class="priority-options">
+                        <input type="hidden" name="access_key" value="65bc803d-e033-45bc-b417-e2f9689326e3">
+                        <input type="radio" id="priority1" class="priority" value="Investing" name="priority">
+                        <label for="priority1">Investing</label>
+                        <input type="radio" id="priority2" class="priority" value="Savings" name="priority">
+                        <label for="priority2">Savings</label>
+                        <input type="radio" id="priority3" class="priority" value="Spendings" name="priority">
+                        <label for="priority3">Spendings</label>
+                    </div>
+
+                    <label for="select">With your income, how would you use it (check all that apply):</label>
+                    <div class="select-options">
+                        <input type="checkbox" name="select" id="select1" class="select">
+                        <label for="select1">Movie night 1000</label>
+                        <input type="checkbox" name="select" id="select2" class="select">
+                        <label for="select2">Video game 4000</label>
+                        <input type="checkbox" name="select" id="select3" class="select">
+                        <label for="select3">Course from Coursera 750</label>
+                        <input type="checkbox" name="select" id="select4" class="select">
+                        <label for="select4">Savings for future 3000</label>
+                        <input type="checkbox" name="select" id="select5" class="select">
+                        <label for="select5">Study material 1000</label>
+                        <input type="checkbox" name="select" id="select6" class="select">
+                        <label for="select6">Gift for bf/gf 2000</label>
+                    </div>
+                        <button type="submit">SUBMIT</button>
+                        <button type="reset">RESET</button>
+                </div>
+            </form>
+          </div>
+          <div class="game-2">
+            <div class="game-2-name">
+                <h1>GAME 2</h1>
+                <p>Manage your credit score</p>
+              </div> 
+              <div class="game-2-rules">
+                <h1>Default score</h1>
+                <h1>700 credit</h1>
+              </div>
+              <div class="game-2-p">
+                <p>Choose your decisions wisely, remeber it will impact your credit score postively/negatively.</p>
+              </div>
+          </div>
+          <div>
+            <div class="game-container">
+                <h1>Credit Score Game</h1>
+                <h2>Try every decison, couple of times...</h2>
+                <div class="score">Credit Score: <span id="credit-score">700</span></div>
+                <div class="status" id="status-message"></div>
+                <div class="choices">
+                    <button class="choice" data-score="40">Pay Bills on Time</button>
+                    <button class="choice" data-score="-60">Miss a Loan Payment</button>
+                    <button class="choice" data-score="50">Use Credit Card Wisely</button>
+                    <button class="choice" data-score="-30">Max Out Credit Card</button>
+                </div>
+                <div class="event-box" id="event-box"></div>
+                <button class="restart" id="restart-btn">Restart Game</button>
+            </div>
+            <script>
+                let score = 700;
+                const scoreDisplay = document.getElementById("credit-score");
+                const statusMessage = document.getElementById("status-message");
+                const eventBox = document.getElementById("event-box");
+                const restartBtn = document.getElementById("restart-btn");
+        
+                function updateScore(change) {
+                    score += change;
+                    scoreDisplay.textContent = score;
+                    scoreDisplay.style.color = score < 500 ? "red" : score > 800 ? "green" : "black";
+        
+                    if (score >= 850) {
+                        statusMessage.textContent = "🎉 Congratulations! You have an Excellent Credit Score!";
+                        disableGame();
+                    } else if (score < 300) {
+                        statusMessage.textContent = "❌ Game Over! Your Credit Score Dropped Too Low!";
+                        disableGame();
+                    } else {
+                        statusMessage.textContent = "";
+                    }
+                }
+        
+                document.querySelectorAll(".choice").forEach(button => {
+                    button.addEventListener("click", () => {
+                        const change = parseInt(button.getAttribute("data-score"));
+                        updateScore(change);
+                        triggerEvent();
+                    });
+                });
+        
+                function triggerEvent() {
+                    if (Math.random() < 0.3) {
+                        const events = [
+                            { message: "Unexpected Medical Bill (-50)", effect: -50 },
+                            { message: "Received Bonus (+50)", effect: 50 },
+                            { message: "Fraud Alert! Identity Theft (-100)", effect: -100 },
+                            { message: "Low Credit Utilization (+30)", effect: 30 }
+                        ];
+                        let randomEvent = events[Math.floor(Math.random() * events.length)];
+                        eventBox.textContent = randomEvent.message;
+                        updateScore(randomEvent.effect);
+                        setTimeout(() => { eventBox.textContent = ""; }, 3000);
+                    }
+                }
+        
+                function disableGame() {
+                    document.querySelectorAll(".choice").forEach(button => button.disabled = true);
+                    restartBtn.style.display = "block";
+                }
+        
+                restartBtn.addEventListener("click", () => {
+                    score = 700;
+                    scoreDisplay.textContent = score;
+                    scoreDisplay.style.color = "white";
+                    statusMessage.textContent = "";
+                    eventBox.textContent = "";
+                    document.querySelectorAll(".choice").forEach(button => button.disabled = false);
+                    restartBtn.style.display = "none";
+                });
+            </script>
+          </div>
+    </main>
+    <footer>
+        <a href="https://www.supersatang.com/">Super Satang Website</a>
+        <h3>© Super Satang India | Website by: Meet Shah</h3>
+        <a href="https://www.instagram.com/super.satang.india/">Super Satang IND Instagram</a>
+    </footer>
+</body>
+</html>
